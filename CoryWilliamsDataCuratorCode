@@ -1,0 +1,27 @@
+Cory Williams
+Data Curator
+
+
+cd /projectnb/bf528/users/group_8/project_3
+
+module load star/2.6.0c
+module load gcc
+module load python2
+module load multiqc
+module load fastqc
+
+#run fastqc on all sample files that end in gz
+fastqc *.gz
+#run the uncompress module on all sample files that end in gz
+gunzip *.gz
+
+#conducting star alignments against mouse genome on all samples, sample names were changed per run of alignment
+#!/bin/bash
+STAR --genomeDir /projectnb/bf528/users/group_8/project_3/rn4_STAR \
+--runThreadN 16 \
+--readFilesIn /projectnb/bf528/users/group_8/project_3/SRR1178063_1.fastq \
+--outSAMtype BAM SortedByCoordinate \
+--outFileNamePrefix /projectnb/bf528/users/group_8/project_3/SRR1178063_1_ \
+
+#running multiqc on folder containing fastqc files and star alignment output files
+multiqc /projectnb/bf528/users/group_8/project_3/tox3samples
